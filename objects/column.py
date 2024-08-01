@@ -3,11 +3,13 @@ import random
 import pygame
 import assets
 import configs
+from layer import Layer
 
 
 class Column(pygame.sprite.Sprite):
 
     def __init__(self, *groups):
+        self._layer = Layer.OBSTACLE
         self.gap = 100
 
         self.sprite = assets.get_sprite("pipe-green")
@@ -24,7 +26,7 @@ class Column(pygame.sprite.Sprite):
 
         self.image.blit(self.pipe_bottom, self.pipe_bottom_rect)
         self.image.blit(self.pipe_top, self.pipe_top_rect)
-        self
+
         sprite_floor_height = assets.get_sprite("floor2").get_rect().height
 
         min_y = 80
