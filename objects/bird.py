@@ -4,7 +4,8 @@ import pygame
 import assets
 import configs
 from layer import Layer
-
+from objects.column import  Column
+from objects.floor import Floor
 class Bird(pygame.sprite.Sprite):
 
     def __init__(self, *groups):
@@ -18,7 +19,9 @@ class Bird(pygame.sprite.Sprite):
         self.image = self.images[0]
         self.rect = self.image.get_rect(topleft=(-50,50))
 
-        self.flap =0
+        self.mask = pygame.mask.from_surface(self.image)
+
+        self.flap = 0
 
         super().__init__(*groups)
 
@@ -30,9 +33,17 @@ class Bird(pygame.sprite.Sprite):
         self.flap += configs.GRAVITY
         self.rect.y += self.flap
         if self.rect.x < 50:
-            self.rect.x += 2
+            self.rect.x += 3
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             self.flap = 0
             self.flap -= 5
+
+    def check_collision(self, sprites):
+        for sprite in sprites:
+            if (type(sprite) is Column or type(sprite) is Floor) and sprite.mask.overlap(self.mask, (
+                    self.rect.x - sprite.rect.x,self.rect.y - sprite.rect.y ) or self.rect.bottom<0):
+                return True
+        return False
+

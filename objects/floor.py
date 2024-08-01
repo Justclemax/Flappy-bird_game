@@ -3,6 +3,7 @@ import assets
 import configs
 from layer import Layer
 
+
 class Floor(pygame.sprite.Sprite):
 
     def __init__(self, index, *groups):
@@ -10,7 +11,7 @@ class Floor(pygame.sprite.Sprite):
         self.image = assets.get_sprite("floor2")
 
         self.rect = self.image.get_rect(topleft=(configs.SCREEN_WIDTH * index, 450))
-
+        self.mask = pygame.mask.from_surface(self.image)
         super().__init__(*groups)
 
     def update(self):

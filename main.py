@@ -29,7 +29,7 @@ bird = Bird(sprites)
 
 
 pygame.time.set_timer(colmn_create_event,1500)
-
+game_over = False
 while runnning:
     for event in pygame.event.get():
         if event.type ==pygame.QUIT:
@@ -40,7 +40,12 @@ while runnning:
     screen.fill(0)
 
     sprites.draw(screen)
-    sprites.update()
+    if not game_over:
+        sprites.update()
+
+    if bird.check_collision(sprites):
+        game_over =True
+
 
     pygame.display.flip()
 
